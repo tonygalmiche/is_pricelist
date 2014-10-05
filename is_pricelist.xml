@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+<data>
+
+  <!-- tree view product.pricelist.item -->
+  <record id="is_product_pricelist_item_tree_view" model="ir.ui.view">
+      <field name="name">product.pricelist.item.tree</field>
+      <field name="model">product.pricelist.item</field>
+      <field name="inherit_id" ref="product.product_pricelist_item_tree_view" />
+      <field name="arch" type="xml">
+        <!-- Remplacement complet de la vue tree -->
+        <xpath expr="//tree" position="replace">
+          <tree string="Products Listprices Items">
+              <field name="sequence"/>
+              <field name="product_id"/>
+              <field name="base"/>
+              <field name="min_quantity"/>
+              <field name="price_surcharge"/>
+          </tree>
+        </xpath>
+      </field>
+  </record>
+
+
+  <!-- search view product.pricelist.item -->
+  <record model="ir.ui.view" id="is_product_pricelist_item_search_view">
+      <field name="name">product.pricelist.item.search</field>
+      <field name="model">product.pricelist.item</field>
+      <field name="arch" type="xml">
+          <search string="Products Price Item Search">
+              <field name="product_id" filter_domain="[('product_id', 'ilike', self)]"/>
+          </search>
+      </field>
+  </record>
+
+
+  <!-- Action pour accèder aux lignes des liste des prix pour l'importation -->
+  <record model="ir.actions.act_window" id="action_is_pricelist">
+    <field name="name">action_is_pricelist</field>
+    <field name="res_model">product.pricelist.item</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="is_product_pricelist_item_search_view" />
+  </record>
+
+  <!-- Menu pour accèder aux lignes des liste des prix -->
+  <menuitem id="menu_is_pricelist" sequence="10" name="Item version liste de prix" parent="purchase.menu_purchase_pricelist_version_action" action="action_is_pricelist" />
+
+</data>
+</openerp>
